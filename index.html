@@ -2,6 +2,10 @@
 <html>
 <head>
   <title>BlinkShop</title>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>BlinkShop</title>
 
   <style>
     body {
@@ -56,6 +60,77 @@
       font-size: 14px;
     }
   </style>
+</head>
+
+<body>
+
+<h1>🚀 BlinkShop (10 min delivery)</h1>
+<p>Order now on WhatsApp</p>
+
+<div class="product">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Milk_glass.jpg">
+  <h3>Milk</h3>
+  <p>₹60</p>
+  <button onclick="order('Milk')">Order</button>
+</div>
+
+<div class="product">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Bread.jpg">
+  <h3>Bread</h3>
+  <p>₹40</p>
+  <button onclick="order('Bread')">Order</button>
+</div>
+
+<div class="product">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/6/69/Potato-Chips.jpg">
+  <h3>Chips</h3>
+  <p>₹20</p>
+  <button onclick="order('Chips')">Order</button>
+</div>
+
+<br><br>
+
+<button onclick="getLocation()">📍 Share Location</button>
+<p id="location"></p>
+
+<script>
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      let lat = position.coords.latitude;
+      let lon = position.coords.longitude;
+
+      document.getElementById("location").innerText =
+        "Your Location: " + lat + ", " + lon;
+    });
+  } else {
+    alert("Geolocation not supported");
+  }
+}
+
+function order(item) {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      let lat = position.coords.latitude;
+      let lon = position.coords.longitude;
+
+      let phone = "91XXXXXXXXXX"; // 👉 put your number
+
+      let message = encodeURIComponent(
+        "I want to order " + item +
+        " Location: https://maps.google.com/?q=" + lat + "," + lon
+      );
+
+      window.open("https://wa.me/" + phone + "?text=" + message);
+    });
+  } else {
+    alert("Location not supported");
+  }
+}
+</script>
+
+</body>
+</html>
 </head>
 
 <body>
