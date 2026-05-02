@@ -27,6 +27,26 @@ display:inline-block;
 margin:10px;
 }
 
+/* SLIDER */
+.slider{
+width:90%;
+margin:20px auto;
+overflow:hidden;
+border-radius:15px;
+}
+
+.slides{
+display:flex;
+transition:transform 0.5s ease;
+}
+
+.slides img{
+width:100%;
+height:180px;
+object-fit:cover;
+}
+
+/* PRODUCTS */
 .product{
 background:white;
 margin:15px;
@@ -64,6 +84,7 @@ background:white;
 padding:10px;
 border-radius:15px;
 box-shadow:0 0 10px rgba(0,0,0,0.2);
+text-align:left;
 }
 
 .dark #cart{background:#222;}
@@ -81,12 +102,19 @@ margin:5px;
 
 <div class="offer">🚚 Free Delivery? Give Kabaad ♻️</div>
 
+<!-- SLIDER -->
+<div class="slider">
+  <div class="slides" id="slides">
+    <img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092">
+    <img src="https://images.unsplash.com/photo-1606787366850-de6330128bfc">
+    <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836">
+  </div>
+</div>
+
 <br>
 
 <input placeholder="Search..." oninput="search(this.value)">
 <button onclick="toggleDark()">🌙</button>
-
-<br>
 
 <!-- PRODUCTS -->
 <div id="products">
@@ -117,7 +145,7 @@ margin:5px;
 <!-- CART -->
 <div id="cart">
 <h3>🛒 Cart</h3>
-<div id="cartItems"></div>
+<div id="cartItems">Empty</div>
 <p>Total ₹<span id="total">0</span></p>
 
 <input id="coupon" placeholder="Coupon">
@@ -127,7 +155,7 @@ margin:5px;
 <button onclick="checkout()">Checkout</button>
 </div>
 
-<!-- PAYMENT SCREEN -->
+<!-- PAYMENT -->
 <div id="payment" style="display:none;">
 <h2>💳 Payment</h2>
 <p>Total: ₹<span id="payTotal"></span></p>
@@ -136,6 +164,7 @@ margin:5px;
 
 <script>
 
+/* CART */
 let cart={};
 let total=0;
 let discount=0;
@@ -175,6 +204,7 @@ document.getElementById("cartItems").innerHTML=html||"Empty";
 document.getElementById("total").innerText=total-discount;
 }
 
+/* COUPON */
 function applyCoupon(){
 let c=document.getElementById("coupon").value;
 if(c=="SAVE10"){
@@ -186,6 +216,7 @@ alert("Invalid");
 updateCart();
 }
 
+/* PAYMENT */
 function checkout(){
 document.getElementById("payment").style.display="block";
 document.getElementById("payTotal").innerText=total-discount;
@@ -193,10 +224,10 @@ document.getElementById("payTotal").innerText=total-discount;
 
 function pay(){
 alert("Payment Successful 🎉");
-
 startDeliveryTimer();
 }
 
+/* DELIVERY TIMER */
 function startDeliveryTimer(){
 let t=600;
 let interval=setInterval(()=>{
@@ -213,6 +244,7 @@ document.body.innerHTML="<h1>✅ Delivered!</h1>";
 },1000);
 }
 
+/* SEARCH */
 function search(val){
 let items=document.querySelectorAll(".product");
 items.forEach(p=>{
@@ -220,9 +252,20 @@ p.style.display=p.dataset.name.includes(val.toLowerCase())?"inline-block":"none"
 });
 }
 
+/* DARK MODE */
 function toggleDark(){
 document.body.classList.toggle("dark");
 }
+
+/* SLIDER */
+let index=0;
+setInterval(()=>{
+let slides=document.getElementById("slides");
+let totalSlides=slides.children.length;
+
+index=(index+1)%totalSlides;
+slides.style.transform="translateX(-"+index*100+"%)";
+},3000);
 
 </script>
 
