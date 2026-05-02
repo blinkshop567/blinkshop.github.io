@@ -3,29 +3,79 @@
 <head>
 <title>BlinkShop</title>
 
+<!-- GOOGLE FONT -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
 <style>
 body{
-font-family:Arial;
+font-family:'Poppins',sans-serif;
 margin:0;
-text-align:center;
 background:linear-gradient(120deg,#fdfbfb,#ebedee);
+overflow-x:hidden;
 }
 
-.dark{
+/* LOADER */
+#loader{
+position:fixed;
+width:100%;
+height:100%;
 background:#111;
 color:white;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+z-index:9999;
+animation:fadeOut 1s ease forwards;
+animation-delay:2.5s;
 }
 
-h1{margin:10px;}
+@keyframes fadeOut{
+to{opacity:0;visibility:hidden;}
+}
 
+/* HEADER */
+header{
+position:sticky;
+top:0;
+background:white;
+padding:10px;
+box-shadow:0 2px 10px rgba(0,0,0,0.1);
+z-index:1000;
+}
+
+header h1{
+margin:0;
+}
+
+/* OFFER */
 .offer{
+text-align:center;
+margin:10px;
+padding:10px;
 background:linear-gradient(135deg,#00c853,#00bcd4);
 color:white;
-padding:12px;
-border-radius:25px;
-display:inline-block;
+border-radius:20px;
+}
+
+/* CATEGORY TABS */
+.tabs{
+text-align:center;
 margin:10px;
-font-weight:bold;
+}
+
+.tabs button{
+margin:5px;
+padding:8px 15px;
+border:none;
+border-radius:20px;
+background:#ddd;
+cursor:pointer;
+}
+
+.tabs button.active{
+background:#00c853;
+color:white;
 }
 
 /* SLIDER */
@@ -38,12 +88,12 @@ border-radius:15px;
 
 .slides{
 display:flex;
-transition:transform 0.5s ease;
+transition:0.5s;
 }
 
 .slide{
-position:relative;
 min-width:100%;
+position:relative;
 }
 
 .slide img{
@@ -53,130 +103,135 @@ object-fit:cover;
 filter:brightness(0.7);
 }
 
-/* TEXT OVERLAY */
 .text{
 position:absolute;
 top:50%;
 left:50%;
 transform:translate(-50%,-50%);
 color:white;
-font-size:22px;
 font-weight:bold;
-text-shadow:0 0 10px rgba(0,0,0,0.7);
-}
-
-.text.big{
-font-size:28px;
-letter-spacing:2px;
+font-size:22px;
 }
 
 /* PRODUCTS */
+#products{
+text-align:center;
+}
+
 .product{
-background:white;
+display:inline-block;
+width:200px;
 margin:15px;
 padding:10px;
 border-radius:15px;
-display:inline-block;
-width:200px;
+background:white;
+animation:fadeUp 0.6s ease;
 }
 
-.dark .product{background:#222;}
+@keyframes fadeUp{
+from{transform:translateY(20px);opacity:0;}
+to{transform:translateY(0);opacity:1;}
+}
 
-img{
+.product img{
 width:120px;
 height:120px;
-object-fit:cover;
 border-radius:10px;
+object-fit:cover;
 }
 
 button{
-margin:5px;
-padding:6px 10px;
-border:none;
-border-radius:8px;
 background:#00c853;
 color:white;
+border:none;
+padding:6px 10px;
+border-radius:8px;
 cursor:pointer;
 }
 
+/* CART */
 #cart{
 position:fixed;
 right:10px;
-top:10px;
-width:230px;
+top:80px;
+width:220px;
 background:white;
 padding:10px;
-border-radius:15px;
+border-radius:10px;
 box-shadow:0 0 10px rgba(0,0,0,0.2);
-text-align:left;
-}
-
-.dark #cart{background:#222;}
-
-input{
-padding:5px;
-margin:5px;
 }
 </style>
 </head>
 
 <body>
 
+<!-- LOADER -->
+<div id="loader">
 <h1>🚀 BlinkShop</h1>
+<p>Loading...</p>
+</div>
+
+<!-- HEADER -->
+<header>
+<h1>🚀 BlinkShop</h1>
+</header>
 
 <div class="offer">
 ♻️ Sell Your Kabaad at Best Price & Get Free Delivery 🚚
 </div>
 
-<!-- SLIDER WITH TEXT -->
+<!-- SLIDER -->
 <div class="slider">
-  <div class="slides" id="slides">
+<div class="slides" id="slides">
 
-    <div class="slide">
-      <img src="https://images.unsplash.com/photo-1542838132-92c53300491e">
-      <div class="text"> First Time in India</div>
-    </div>
-
-    <div class="slide">
-      <img src="https://images.unsplash.com/photo-1606787366850-de6330128bfc">
-      <div class="text">🚀 We Present</div>
-    </div>
-
-    <div class="slide">
-      <img src="https://images.unsplash.com/photo-1586201375761-83865001e31c">
-      <div class="text big">✨ THE BLINKSHOP ✨</div>
-    </div>
-
-  </div>
+<div class="slide">
+<img src="https://images.unsplash.com/photo-1542838132-92c53300491e">
+<div class="text">🇮🇳 First Time in India</div>
 </div>
 
-<br>
+<div class="slide">
+<img src="https://images.unsplash.com/photo-1606787366850-de6330128bfc">
+<div class="text">🚀 We Present</div>
+</div>
 
-<input placeholder="Search..." oninput="search(this.value)">
-<button onclick="toggleDark()">🌙</button>
+<div class="slide">
+<img src="https://images.unsplash.com/photo-1586201375761-83865001e31c">
+<div class="text">✨ THE BLINKSHOP ✨</div>
+</div>
+
+</div>
+</div>
+
+<!-- CATEGORY TABS -->
+<div class="tabs">
+<button onclick="filter('all')" class="active">All</button>
+<button onclick="filter('dairy')">Dairy</button>
+<button onclick="filter('snacks')">Snacks</button>
+<button onclick="filter('drinks')">Drinks</button>
+</div>
 
 <!-- PRODUCTS -->
 <div id="products">
 
-<div class="product" data-name="milk dairy">
+<div class="product" data-cat="dairy">
 <img src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Milk_glass.jpg">
 <h3>Milk</h3>
 <p>₹60</p>
 <button onclick="add('Milk',60)">Add</button>
 </div>
 
-<div class="product" data-name="bread bakery">
-<img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Bread.jpg">
-<h3>Bread</h3>
-<p>₹40</p>
-<button onclick="add('Bread',40)">Add</button>
-</div>
-
-<div class="product" data-name="chips snacks">
+<div class="product" data-cat="snacks">
 <img src="https://upload.wikimedia.org/wikipedia/commons/6/69/Potato-Chips.jpg">
 <h3>Chips</h3>
 <p>₹20</p>
 <button onclick="add('Chips',20)">Add</button>
+</div>
+
+<div class="product" data-cat="drinks">
+<img src="https://upload.wikimedia.org/wikipedia/commons/3/36/Orange_juice_1.jpg">
+<h3>Juice</h3>
+<p>₹50</p>
+<button onclick="add('Juice',50)">Add</button>
 </div>
 
 </div>
@@ -186,42 +241,16 @@ margin:5px;
 <h3>🛒 Cart</h3>
 <div id="cartItems">Empty</div>
 <p>Total ₹<span id="total">0</span></p>
-
-<input id="coupon" placeholder="Coupon">
-<button onclick="applyCoupon()">Apply</button>
-
-<br>
-<button onclick="checkout()">Checkout</button>
-</div>
-
-<!-- PAYMENT -->
-<div id="payment" style="display:none;">
-<h2>💳 Payment</h2>
-<p>Total: ₹<span id="payTotal"></span></p>
-<button onclick="pay()">Pay Now</button>
 </div>
 
 <script>
 
 /* CART */
-let cart={};
-let total=0;
-let discount=0;
+let cart={},total=0;
 
 function add(item,price){
 if(!cart[item]) cart[item]={qty:0,price:price};
 cart[item].qty++;
-updateCart();
-}
-
-function remove(item){
-delete cart[item];
-updateCart();
-}
-
-function changeQty(item,delta){
-cart[item].qty+=delta;
-if(cart[item].qty<=0) delete cart[item];
 updateCart();
 }
 
@@ -232,68 +261,24 @@ total=0;
 for(let i in cart){
 let p=cart[i];
 total+=p.qty*p.price;
-
-html+= i+" x"+p.qty+
-" <button onclick=\"changeQty('"+i+"',1)\">+</button>"+
-" <button onclick=\"changeQty('"+i+"',-1)\">-</button>"+
-" <button onclick=\"remove('"+i+"')\">❌</button><br>";
+html+=i+" x"+p.qty+"<br>";
 }
 
 document.getElementById("cartItems").innerHTML=html||"Empty";
-document.getElementById("total").innerText=total-discount;
+document.getElementById("total").innerText=total;
 }
 
-/* COUPON */
-function applyCoupon(){
-let c=document.getElementById("coupon").value;
-if(c=="SAVE10"){
-discount=10;
-alert("₹10 off applied");
-}else{
-alert("Invalid");
-}
-updateCart();
-}
+/* FILTER */
+function filter(cat){
+let products=document.querySelectorAll(".product");
+let buttons=document.querySelectorAll(".tabs button");
 
-/* PAYMENT */
-function checkout(){
-document.getElementById("payment").style.display="block";
-document.getElementById("payTotal").innerText=total-discount;
-}
+buttons.forEach(b=>b.classList.remove("active"));
+event.target.classList.add("active");
 
-function pay(){
-alert("Payment Successful 🎉");
-startDeliveryTimer();
-}
-
-/* DELIVERY TIMER */
-function startDeliveryTimer(){
-let t=600;
-let interval=setInterval(()=>{
-t--;
-let m=Math.floor(t/60);
-let s=t%60;
-
-document.body.innerHTML="<h1>🚚 Delivery in "+m+":"+s+"</h1>";
-
-if(t<=0){
-clearInterval(interval);
-document.body.innerHTML="<h1>✅ Delivered!</h1>";
-}
-},1000);
-}
-
-/* SEARCH */
-function search(val){
-let items=document.querySelectorAll(".product");
-items.forEach(p=>{
-p.style.display=p.dataset.name.includes(val.toLowerCase())?"inline-block":"none";
+products.forEach(p=>{
+p.style.display=(cat=="all"||p.dataset.cat==cat)?"inline-block":"none";
 });
-}
-
-/* DARK MODE */
-function toggleDark(){
-document.body.classList.toggle("dark");
 }
 
 /* SLIDER */
@@ -301,7 +286,6 @@ let index=0;
 setInterval(()=>{
 let slides=document.getElementById("slides");
 let totalSlides=slides.children.length;
-
 index=(index+1)%totalSlides;
 slides.style.transform="translateX(-"+index*100+"%)";
 },3000);
