@@ -1,166 +1,229 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>BlinkShop</title>
+<title>BlinkShop</title>
 
-  <style>
-    body {
-      font-family: Arial;
-      text-align: center;
-      margin: 0;
-      color: #1a1a1a;
-      overflow-x: hidden;
-      background: linear-gradient(120deg, #fdfbfb, #ebedee);
-    }
+<style>
+body{
+font-family:Arial;
+margin:0;
+text-align:center;
+background:linear-gradient(120deg,#fdfbfb,#ebedee);
+}
 
-    /* glowing background */
-    body::before,
-    body::after {
-      content: "";
-      position: fixed;
-      width: 400px;
-      height: 400px;
-      border-radius: 50%;
-      filter: blur(120px);
-      opacity: 0.4;
-      z-index: -1;
-      animation: float 10s infinite alternate ease-in-out;
-    }
+.dark{
+background:#111;
+color:white;
+}
 
-    body::before {
-      background: #00c853;
-      top: -100px;
-      left: -100px;
-    }
+h1{margin:10px;}
 
-    body::after {
-      background: #00bcd4;
-      bottom: -100px;
-      right: -100px;
-      animation-delay: 3s;
-    }
+.offer{
+background:linear-gradient(135deg,#00c853,#00bcd4);
+color:white;
+padding:10px;
+border-radius:20px;
+display:inline-block;
+margin:10px;
+}
 
-    @keyframes float {
-      from { transform: translateY(0px); }
-      to { transform: translateY(60px); }
-    }
+.product{
+background:white;
+margin:15px;
+padding:10px;
+border-radius:15px;
+display:inline-block;
+width:200px;
+}
 
-    h1 {
-      margin-top: 20px;
-      font-size: 32px;
-    }
+.dark .product{background:#222;}
 
-    .product {
-      background: rgba(255,255,255,0.7);
-      backdrop-filter: blur(10px);
-      margin: 20px;
-      padding: 15px;
-      border-radius: 20px;
-      display: inline-block;
-      width: 220px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-      transition: transform 0.3s;
-    }
+img{
+width:120px;
+height:120px;
+object-fit:cover;
+border-radius:10px;
+}
 
-    .product:hover {
-      transform: translateY(-8px) scale(1.03);
-    }
+button{
+margin:5px;
+padding:6px 10px;
+border:none;
+border-radius:8px;
+background:#00c853;
+color:white;
+cursor:pointer;
+}
 
-    img {
-      width: 150px;
-      height: 150px;
-      object-fit: cover;
-      border-radius: 12px;
-      margin-bottom: 10px;
-    }
+#cart{
+position:fixed;
+right:10px;
+top:10px;
+width:230px;
+background:white;
+padding:10px;
+border-radius:15px;
+box-shadow:0 0 10px rgba(0,0,0,0.2);
+}
 
-    button {
-      background: linear-gradient(135deg, #00c853, #00bcd4);
-      color: white;
-      padding: 10px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      margin-top: 5px;
-      transition: transform 0.2s;
-    }
+.dark #cart{background:#222;}
 
-    button:hover {
-      transform: scale(1.05);
-    }
-
-    #location {
-      margin-top: 10px;
-      font-size: 14px;
-    }
-  </style>
+input{
+padding:5px;
+margin:5px;
+}
+</style>
 </head>
 
 <body>
 
-<h1>🚀 BlinkShop (10 min delivery)</h1>
-<p>Order now on WhatsApp</p>
+<h1>🚀 BlinkShop</h1>
 
-<div class="product">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Milk_glass.jpg">
-  <h3>Milk</h3>
-  <p>₹60</p>
-  <button onclick="order('Milk')">Order</button>
+<div class="offer">🚚 Free Delivery? Give Kabaad ♻️</div>
+
+<br>
+
+<input placeholder="Search..." oninput="search(this.value)">
+<button onclick="toggleDark()">🌙</button>
+
+<br>
+
+<!-- PRODUCTS -->
+<div id="products">
+
+<div class="product" data-name="milk dairy">
+<img src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Milk_glass.jpg">
+<h3>Milk</h3>
+<p>₹60</p>
+<button onclick="add('Milk',60)">Add</button>
 </div>
 
-<div class="product">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Bread.jpg">
-  <h3>Bread</h3>
-  <p>₹40</p>
-  <button onclick="order('Bread')">Order</button>
+<div class="product" data-name="bread bakery">
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Bread.jpg">
+<h3>Bread</h3>
+<p>₹40</p>
+<button onclick="add('Bread',40)">Add</button>
 </div>
 
-<div class="product">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/6/69/Potato-Chips.jpg">
-  <h3>Chips</h3>
-  <p>₹20</p>
-  <button onclick="order('Chips')">Order</button>
+<div class="product" data-name="chips snacks">
+<img src="https://upload.wikimedia.org/wikipedia/commons/6/69/Potato-Chips.jpg">
+<h3>Chips</h3>
+<p>₹20</p>
+<button onclick="add('Chips',20)">Add</button>
 </div>
 
-<br><br>
+</div>
 
-<button onclick="getLocation()">📍 Share Location</button>
-<p id="location"></p>
+<!-- CART -->
+<div id="cart">
+<h3>🛒 Cart</h3>
+<div id="cartItems"></div>
+<p>Total ₹<span id="total">0</span></p>
+
+<input id="coupon" placeholder="Coupon">
+<button onclick="applyCoupon()">Apply</button>
+
+<br>
+<button onclick="checkout()">Checkout</button>
+</div>
+
+<!-- PAYMENT SCREEN -->
+<div id="payment" style="display:none;">
+<h2>💳 Payment</h2>
+<p>Total: ₹<span id="payTotal"></span></p>
+<button onclick="pay()">Pay Now</button>
+</div>
 
 <script>
-function getLocation() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function(position) {
-      let lat = position.coords.latitude;
-      let lon = position.coords.longitude;
 
-      document.getElementById("location").innerText =
-        "Your Location: " + lat + ", " + lon;
-    });
-  } else {
-    alert("Geolocation not supported");
-  }
+let cart={};
+let total=0;
+let discount=0;
+
+function add(item,price){
+if(!cart[item]) cart[item]={qty:0,price:price};
+cart[item].qty++;
+updateCart();
 }
 
-function order(item) {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function(position) {
-      let lat = position.coords.latitude;
-      let lon = position.coords.longitude;
-
-      let phone = "91XXXXXXXXXX"; // put your number
-
-      let message = encodeURIComponent(
-        "I want to order " + item +
-        " Location: https://maps.google.com/?q=" + lat + "," + lon
-      );
-
-      window.open("https://wa.me/" + phone + "?text=" + message);
-    });
-  } else {
-    alert("Location not supported");
-  }
+function remove(item){
+delete cart[item];
+updateCart();
 }
+
+function changeQty(item,delta){
+cart[item].qty+=delta;
+if(cart[item].qty<=0) delete cart[item];
+updateCart();
+}
+
+function updateCart(){
+let html="";
+total=0;
+
+for(let i in cart){
+let p=cart[i];
+total+=p.qty*p.price;
+
+html+= i+" x"+p.qty+
+" <button onclick=\"changeQty('"+i+"',1)\">+</button>"+
+" <button onclick=\"changeQty('"+i+"',-1)\">-</button>"+
+" <button onclick=\"remove('"+i+"')\">❌</button><br>";
+}
+
+document.getElementById("cartItems").innerHTML=html||"Empty";
+document.getElementById("total").innerText=total-discount;
+}
+
+function applyCoupon(){
+let c=document.getElementById("coupon").value;
+if(c=="SAVE10"){
+discount=10;
+alert("₹10 off applied");
+}else{
+alert("Invalid");
+}
+updateCart();
+}
+
+function checkout(){
+document.getElementById("payment").style.display="block";
+document.getElementById("payTotal").innerText=total-discount;
+}
+
+function pay(){
+alert("Payment Successful 🎉");
+
+startDeliveryTimer();
+}
+
+function startDeliveryTimer(){
+let t=600;
+let interval=setInterval(()=>{
+t--;
+let m=Math.floor(t/60);
+let s=t%60;
+
+document.body.innerHTML="<h1>🚚 Delivery in "+m+":"+s+"</h1>";
+
+if(t<=0){
+clearInterval(interval);
+document.body.innerHTML="<h1>✅ Delivered!</h1>";
+}
+},1000);
+}
+
+function search(val){
+let items=document.querySelectorAll(".product");
+items.forEach(p=>{
+p.style.display=p.dataset.name.includes(val.toLowerCase())?"inline-block":"none";
+});
+}
+
+function toggleDark(){
+document.body.classList.toggle("dark");
+}
+
 </script>
 
 </body>
