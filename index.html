@@ -2,35 +2,41 @@
 <html>
 <head>
   <title>BlinkShop</title>
+
   <style>
     body {
-  font-family: Arial;
-  background: linear-gradient(to right, #e0f7fa, #ffffff);
-}
+      font-family: Arial;
+      text-align: center;
+      background: linear-gradient(to right, #e0f7fa, #ffffff);
+    }
 
-.product {
-  background: white;
-  margin: 20px;
-  padding: 15px;
-  border-radius: 15px;
-  display: inline-block;
-  width: 220px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  transition: transform 0.3s;
-}
+    .product {
+      background: white;
+      margin: 20px;
+      padding: 15px;
+      border-radius: 15px;
+      display: inline-block;
+      width: 220px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+    }
 
-.product:hover {
-  transform: scale(1.05);
-}
+    .product:hover {
+      transform: scale(1.05);
+    }
 
-button {
-  background: #00c853;
-  color: white;
-  padding: 10px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}
+    button {
+      background: #00c853;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
 
 <h1>🚀 BlinkShop (10 min delivery)</h1>
 <p>Order now on WhatsApp</p>
@@ -52,8 +58,12 @@ button {
   <h3>Chips</h3>
   <p>₹20</p>
   <button onclick="order('Chips')">Order</button>
-</div><button onclick="getLocation()">Share Location</button>
-<p id="location"></p><script>
+</div>
+
+<button onclick="getLocation()">Share Location</button>
+<p id="location"></p>
+
+<script>
 function getLocation() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
@@ -66,7 +76,9 @@ function getLocation() {
   } else {
     alert("Geolocation not supported");
   }
-}function order(item) {
+}
+
+function order(item) {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
       let lat = position.coords.latitude;
@@ -84,14 +96,6 @@ function getLocation() {
   } else {
     alert("Location not supported");
   }
-}
-</script>
-
-<script>
-function order(item) {
-  let phone = "7505938315"; // put your number
-  let message = "I want to order " + item;
-  window.open("https://wa.me/" + phone + "?text=" + message);
 }
 </script>
 
