@@ -21,10 +21,11 @@ h1{margin:10px;}
 .offer{
 background:linear-gradient(135deg,#00c853,#00bcd4);
 color:white;
-padding:10px;
-border-radius:20px;
+padding:12px;
+border-radius:25px;
 display:inline-block;
 margin:10px;
+font-weight:bold;
 }
 
 /* SLIDER */
@@ -40,10 +41,33 @@ display:flex;
 transition:transform 0.5s ease;
 }
 
-.slides img{
+.slide{
+position:relative;
+min-width:100%;
+}
+
+.slide img{
 width:100%;
-height:180px;
+height:200px;
 object-fit:cover;
+filter:brightness(0.7);
+}
+
+/* TEXT OVERLAY */
+.text{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+color:white;
+font-size:22px;
+font-weight:bold;
+text-shadow:0 0 10px rgba(0,0,0,0.7);
+}
+
+.text.big{
+font-size:28px;
+letter-spacing:2px;
 }
 
 /* PRODUCTS */
@@ -100,14 +124,29 @@ margin:5px;
 
 <h1>🚀 BlinkShop</h1>
 
-<div class="offer">🚚 Free Delivery? Give Kabaad ♻️</div>
+<div class="offer">
+♻️ Sell Your Kabaad at Best Price & Get Free Delivery 🚚
+</div>
 
-<!-- SLIDER -->
+<!-- SLIDER WITH TEXT -->
 <div class="slider">
   <div class="slides" id="slides">
-    <img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092">
-    <img src="https://images.unsplash.com/photo-1606787366850-de6330128bfc">
-    <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836">
+
+    <div class="slide">
+      <img src="https://images.unsplash.com/photo-1542838132-92c53300491e">
+      <div class="text">🇮🇳 First Time in India</div>
+    </div>
+
+    <div class="slide">
+      <img src="https://images.unsplash.com/photo-1606787366850-de6330128bfc">
+      <div class="text">🚀 We Present</div>
+    </div>
+
+    <div class="slide">
+      <img src="https://images.unsplash.com/photo-1586201375761-83865001e31c">
+      <div class="text big">✨ THE BLINKSHOP ✨</div>
+    </div>
+
   </div>
 </div>
 
