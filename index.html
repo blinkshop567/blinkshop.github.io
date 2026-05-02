@@ -3,18 +3,40 @@
 <head>
   <title>BlinkShop</title>
   <style>
-    body { font-family: Arial; text-align: center; background: #f5f5f5; }
-    .product { background: white; margin: 20px; padding: 15px; border-radius: 10px; display: inline-block; width: 200px; }
-    button { background: green; color: white; padding: 10px; border: none; border-radius: 5px; }
-  </style>
-</head>
+    body {
+  font-family: Arial;
+  background: linear-gradient(to right, #e0f7fa, #ffffff);
+}
 
-<body>
+.product {
+  background: white;
+  margin: 20px;
+  padding: 15px;
+  border-radius: 15px;
+  display: inline-block;
+  width: 220px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: transform 0.3s;
+}
+
+.product:hover {
+  transform: scale(1.05);
+}
+
+button {
+  background: #00c853;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
 
 <h1>🚀 BlinkShop (10 min delivery)</h1>
 <p>Order now on WhatsApp</p>
 
 <div class="product">
+  <img src="https://via.placeholder.com/150" width="150">
   <h3>Milk</h3>
   <p>₹60</p>
   <button onclick="order('Milk')">Order</button>
@@ -30,7 +52,40 @@
   <h3>Chips</h3>
   <p>₹20</p>
   <button onclick="order('Chips')">Order</button>
-</div>
+</div><button onclick="getLocation()">Share Location</button>
+<p id="location"></p><script>
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      let lat = position.coords.latitude;
+      let lon = position.coords.longitude;
+
+      document.getElementById("location").innerText =
+        "Location: " + lat + ", " + lon;
+    });
+  } else {
+    alert("Geolocation not supported");
+  }
+}function order(item) {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      let lat = position.coords.latitude;
+      let lon = position.coords.longitude;
+
+      let phone = "91XXXXXXXXXX";
+
+      let message = encodeURIComponent(
+        "I want to order " + item +
+        " Location: https://maps.google.com/?q=" + lat + "," + lon
+      );
+
+      window.open("https://wa.me/" + phone + "?text=" + message);
+    });
+  } else {
+    alert("Location not supported");
+  }
+}
+</script>
 
 <script>
 function order(item) {
